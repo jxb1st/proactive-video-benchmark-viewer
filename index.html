@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Streaming Visual Assistant Benchmark — Gemini v3</title>
+<title>Streaming Visual Assistant Benchmark — Gemini v3 + v3a</title>
 <style>
 :root {
   --bg: #fff; --fg: #1c1c1c; --muted: #666;
@@ -146,16 +146,56 @@ header.top input[type="text"] {
 }
 .missing { color: var(--missing); font-style: italic; font-size: 13px; }
 .hidden { display: none !important; }
+
+/* ----- v3a answer blocks ----- */
+.answer-block {
+  margin-top: 10px; padding: 8px 10px;
+  background: rgba(45, 142, 78, 0.06); border-left: 3px solid var(--done);
+  border-radius: 4px;
+}
+@media (prefers-color-scheme: dark) {
+  .answer-block { background: rgba(93, 209, 137, 0.08); }
+}
+.answer-head { margin-bottom: 4px; }
+.answer-head .label { color: var(--done); }
+.answer-rationale {
+  font-size: 12.5px; color: var(--muted); margin: 2px 0 8px;
+  font-style: italic;
+}
+.resp-list { margin: 4px 0 0 18px; padding: 0; }
+.resp-item { margin: 4px 0; line-height: 1.45; }
+.resp-time {
+  font-family: monospace; font-size: 11.5px; color: var(--muted);
+  background: var(--card); padding: 1px 5px; border-radius: 3px;
+  margin-right: 6px;
+}
+.resp-text { color: var(--fg); }
+.resp-empty {
+  font-style: italic; color: var(--muted); font-size: 12.5px;
+  margin: 4px 0;
+}
+.cant-answer {
+  margin: 4px 0; padding: 4px 8px;
+  background: var(--card); border-left: 3px solid var(--na);
+  border-radius: 4px; font-size: 12.5px;
+}
+.cant-answer b { color: var(--na); }
+.m-answer { margin-top: 8px; padding-top: 6px; border-top: 1px dashed var(--border); }
+.m-answer:first-of-type { border-top: none; padding-top: 4px; margin-top: 4px; }
+.m-answer-head { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+.m-answer-head .qid {
+  font-family: monospace; font-weight: 600; color: var(--m); margin-right: 6px;
+}
 </style>
 </head>
 <body>
 <header class="top">
   <a href="https://jxb1st.github.io/datasets/" style="color: var(--muted); text-decoration: none; font-size: 13px;">← /datasets</a>
-  <h1>Streaming Visual Assistant Benchmark — Gemini v3 (situated questions)</h1>
+  <h1>Streaming Visual Assistant Benchmark — Gemini v3 questions + v3a answers</h1>
   <div class="stats">
     6 videos · 56/60 cells with questions ·
     4 N/A · 82 questions · samples_per_cell=1 ·
-    (egoschema=30, howto100m=30)
+    (egoschema=30, howto100m=30) · <b>v3a</b>: 56 answer records, 171 response events, 1 can’t-answer
   </div>
   <div class="filters">
     <label class="chip">
@@ -224,6 +264,15 @@ header.top input[type="text"] {
         <span class="ask-time">asked @ 00:01.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know every time I finish washing a dish.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 10)</span>
+        </div>
+        <div class="answer-rationale">I will monitor the video for each time you finish washing an item and place it on the drying rack. There are ten separate instances of this occurring throughout the video. I will provide a short, spoken notification at the conclusion of each instance.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:32.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">01:02.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">01:10.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">01:24.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">01:33.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">01:39.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">01:57.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">02:19.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">02:34.5</span> <span class="resp-text">Dish washed.</span></li><li class="resp-item"><span class="resp-time">02:55.5</span> <span class="resp-text">Dish washed.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -317,6 +366,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:01.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know when I start washing a new dish and again when I'm done with it.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 21)</span>
+        </div>
+        <div class="answer-rationale">I will monitor your activity and identify each time you begin washing a new item and when you finish washing it. I determine the start of the activity when you begin scrubbing or rinsing a new item, and the end when you place the cleaned item on the drying rack. Because you were already washing a dish when you gave the instruction, I've marked the start for that first dish immediately, and I will not announce the end of the final item as you had not finished washing it when the video concluded.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:01.6</span> <span class="resp-text">Starting a new dish.</span></li><li class="resp-item"><span class="resp-time">00:15.0</span> <span class="resp-text">Starting a new dish.</span></li><li class="resp-item"><span class="resp-time">00:33.0</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">01:43.0</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">01:47.2</span> <span class="resp-text">Starting the utensils.</span></li><li class="resp-item"><span class="resp-time">01:50.8</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">01:58.0</span> <span class="resp-text">Starting a new dish.</span></li><li class="resp-item"><span class="resp-time">02:04.5</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">02:06.2</span> <span class="resp-text">Starting a new dish.</span></li><li class="resp-item"><span class="resp-time">02:13.0</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">02:17.2</span> <span class="resp-text">Starting a new dish.</span></li><li class="resp-item"><span class="resp-time">02:20.0</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">02:23.0</span> <span class="resp-text">Starting a new item.</span></li><li class="resp-item"><span class="resp-time">02:37.8</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">03:22.0</span> <span class="resp-text">Starting a new item.</span></li><li class="resp-item"><span class="resp-time">03:39.0</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">03:43.0</span> <span class="resp-text">Starting a new dish.</span></li><li class="resp-item"><span class="resp-time">03:54.0</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">03:58.0</span> <span class="resp-text">Starting a new dish.</span></li><li class="resp-item"><span class="resp-time">04:15.0</span> <span class="resp-text">And done.</span></li><li class="resp-item"><span class="resp-time">04:19.0</span> <span class="resp-text">Starting a new dish.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -410,6 +468,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:05.2</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know when the dish soap bottle is running low.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 2)</span>
+        </div>
+        <div class="answer-rationale">The user issues a standing instruction to be notified when the dish soap is running low. The bottle is already visibly low at the time of the request. The alerts are triggered at two subsequent moments when the user picks up the bottle to use it, making the low level a relevant piece of information. The first alert is at 1:15, and a second, more urgent alert is given at 2:41 when the bottle is nearly empty.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">01:55.5</span> <span class="resp-text">Your dish soap is running low.</span></li><li class="resp-item"><span class="resp-time">04:41.5</span> <span class="resp-text">The dish soap is almost out.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -503,6 +570,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 01:44.0</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Hey, where did that metal scourer go?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The user asks for the location of the metal scourer at 1:44 into the video. I observed the user using the scourer earlier and then setting it down on the red cutting board to the right of the sink. At the moment the question is asked, the scourer is still clearly visible in that location, so I can answer the question accurately.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">01:44.5</span> <span class="resp-text">It's on the red cutting board to your right.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -596,6 +672,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:21.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Wait, have I already washed a baking dish?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The video clearly shows the user washing a light-colored ceramic baking dish at the very beginning of the video, from timestamp 0:00 to 1:04. The question is asked at 141.5 seconds, by which time that first dish has been completely washed and placed in the drying rack. Just before the question, at 141 seconds, the user picks up a second, grey metal baking pan, so I can confirm one has been washed and another is about to be.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:22.1</span> <span class="resp-text">Yes, you washed one at the beginning, and you're holding another one right now.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -689,6 +774,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:06.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> This burnt-on food isn't coming off, what's the best way to clean this without scratching the dish?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I can see the wearer struggling to remove burnt-on food from what appears to be a ceramic or stoneware baking dish using a scouring pad. To answer their question about the best way to clean it without scratching, I will suggest a common and effective method: soaking the dish in hot, soapy water to loosen the food before scrubbing.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:07.5</span> <span class="resp-text">To avoid scratching the dish, it's best to let it soak first. Try filling it with hot water and a squirt of dish soap. If you let it sit for about 15 minutes, the food should lift off much more easily with a gentle scrub.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -782,6 +876,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:39.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Is this dish fully clean now or did I miss some spots?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The user asks if a dish is clean at 39.5 seconds. At that moment, the user is holding up a square baking dish for inspection. While the majority of the food residue has been removed, there are still several small, dark specks visible, particularly in the corners. Therefore, the assistant can confirm that the dish is not yet fully clean and points out where the remaining spots are.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:40.2</span> <span class="resp-text">It's almost there, but I can still see a few small, dark specks remaining in the corners.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -877,6 +980,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:26.5</td><td class='deps'>—</td><td class='qtext'>Keep a running count of how many times I turn the tap on while I'm doing these dishes.</td></tr><tr><td class='qid'>q_002</td><td>01:15.2</td><td class='deps'>—</td><td class='qtext'>Also, can you tell me how many times I add soap to the sponge?</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user provides two separate counting instructions at different times during the dishwashing task. The first is to count how many times the tap is turned on, and the second is to count how many times soap is added to the sponge. The assistant tracks both of these unrelated events concurrently, starting each count only after its corresponding instruction is given, and vocalizes the running total each time a trigger event occurs.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 13</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">00:26.7</span> <span class="resp-text">Okay, that's one.</span></li><li class="resp-item"><span class="resp-time">00:34.4</span> <span class="resp-text">That's two.</span></li><li class="resp-item"><span class="resp-time">00:55.4</span> <span class="resp-text">That's three.</span></li><li class="resp-item"><span class="resp-time">01:07.4</span> <span class="resp-text">That's four.</span></li><li class="resp-item"><span class="resp-time">01:18.4</span> <span class="resp-text">That's five.</span></li><li class="resp-item"><span class="resp-time">01:28.4</span> <span class="resp-text">That's six.</span></li><li class="resp-item"><span class="resp-time">01:37.4</span> <span class="resp-text">That's seven.</span></li><li class="resp-item"><span class="resp-time">01:50.4</span> <span class="resp-text">That's eight.</span></li><li class="resp-item"><span class="resp-time">02:03.4</span> <span class="resp-text">That's nine.</span></li><li class="resp-item"><span class="resp-time">02:14.4</span> <span class="resp-text">That's ten.</span></li><li class="resp-item"><span class="resp-time">02:23.4</span> <span class="resp-text">That's eleven.</span></li><li class="resp-item"><span class="resp-time">02:38.4</span> <span class="resp-text">That's twelve.</span></li><li class="resp-item"><span class="resp-time">02:59.4</span> <span class="resp-text">That's thirteen.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:41.5</span> <span class="resp-text">Okay, that's once for the soap.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -971,6 +1081,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:15.0</td><td class='deps'>—</td><td class='qtext'>Hey, can you time how long it takes me to wash each of these items?</td></tr><tr><td class='qid'>q_002</td><td>01:40.0</td><td class='deps'>q_001</td><td class='qtext'>Actually, just time me on the big things, like the baking dishes and these cutting boards.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user first asks the assistant to time how long it takes to wash each item. The assistant tracks this for several items, including baking dishes, cutlery, and plates, announcing the duration after each is placed on the drying rack. Later, the user updates the instruction to only time the larger items like baking dishes and cutting boards. The assistant acknowledges this change and from that point forward, only reports the times for those specific items, ignoring the smaller ones.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 6</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">00:32.5</span> <span class="resp-text">That took about 17 seconds.</span></li><li class="resp-item"><span class="resp-time">01:02.5</span> <span class="resp-text">That one took 29 seconds.</span></li><li class="resp-item"><span class="resp-time">01:10.0</span> <span class="resp-text">The cutlery took 4 seconds.</span></li><li class="resp-item"><span class="resp-time">01:21.0</span> <span class="resp-text">4 seconds for that bowl.</span></li><li class="resp-item"><span class="resp-time">01:32.5</span> <span class="resp-text">The red plate took about 7 seconds.</span></li><li class="resp-item"><span class="resp-time">01:39.5</span> <span class="resp-text">And that took 5 seconds.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 4</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">01:40.5</span> <span class="resp-text">Okay, I'll only time the baking dishes and cutting boards from now on.</span></li><li class="resp-item"><span class="resp-time">01:57.0</span> <span class="resp-text">The green cutting board took 16 seconds to wash.</span></li><li class="resp-item"><span class="resp-time">02:18.0</span> <span class="resp-text">That one took 18 seconds.</span></li><li class="resp-item"><span class="resp-time">02:33.5</span> <span class="resp-text">And that baking dish took about 12 seconds.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -1065,6 +1182,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:33.5</td><td class='deps'>—</td><td class='qtext'>Keep track of the dishes for me and let me know when I get to the last one.</td></tr><tr><td class='qid'>q_002</td><td>01:45.0</td><td class='deps'>q_001</td><td class='qtext'>Once I start washing that last dish, remind me to wipe down the counters when I'm done.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues a chain of two instructions. The first is to be notified upon starting the last dish, and the second is to be reminded to wipe the counters after finishing that last dish. The assistant tracks all the items being washed, identifying the pot lid picked up at the end of the video as the final item. Upon seeing the user start to wash the lid, the assistant fires the first response. The video ends before the user finishes washing this last item, so the trigger for the second instruction never occurs, and thus no second response is given.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">04:17.5</span> <span class="resp-text">Okay, this is the last one.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 0</span></div><div class="resp-empty">(no responses — trigger never fired in this video)</div></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -1177,6 +1301,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:10.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Give me a heads-up every time I pull a wheel off.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I have identified the single instance in the video where the user pulls a wheel completely off the car's hub assembly. This action occurs after the user has removed the lug nuts from all four wheels. I will provide a brief heads-up at the moment this event happens.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">01:59.5</span> <span class="resp-text">That's one wheel off.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -1270,6 +1403,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:38.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Time me from when I start removing a wheel to when I get it off the car, and do that for each one.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 8)</span>
+        </div>
+        <div class="answer-rationale">The user has issued a standing instruction to time the removal of each wheel. I will identify the start of each removal, which is when the user begins to loosen the lug nuts with the impact wrench, and the end, which is when the wheel is pulled off the vehicle's axle. I will provide a spoken response at both the start and the end for each of the four wheels removed in the video.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:42.0</span> <span class="resp-text">Starting timer for the first wheel.</span></li><li class="resp-item"><span class="resp-time">00:52.0</span> <span class="resp-text">That took 10 seconds.</span></li><li class="resp-item"><span class="resp-time">01:42.0</span> <span class="resp-text">Starting timer for the second wheel.</span></li><li class="resp-item"><span class="resp-time">01:53.0</span> <span class="resp-text">That one was 11 seconds.</span></li><li class="resp-item"><span class="resp-time">02:04.0</span> <span class="resp-text">Starting timer for wheel three.</span></li><li class="resp-item"><span class="resp-time">02:14.0</span> <span class="resp-text">Done in 10 seconds.</span></li><li class="resp-item"><span class="resp-time">02:20.0</span> <span class="resp-text">Starting the timer on the last wheel.</span></li><li class="resp-item"><span class="resp-time">02:39.0</span> <span class="resp-text">And that took 19 seconds.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -1363,6 +1505,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:11.2</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Hey, for this and all future jobs, let me know anytime you see a brake pad that's worn down to 3 millimeters or less.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 2)</span>
+        </div>
+        <div class="answer-rationale">I am monitoring the video for the standing instruction to identify any brake pads worn to 3 millimeters or less. I detected two such instances when the user removed the front wheels. The first alert is triggered when the front passenger-side pad becomes visible, and the second is triggered for the front driver-side pad, as both appeared to be below the specified wear threshold.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">03:25.5</span> <span class="resp-text">This brake pad is worn to 3 millimeters or less.</span></li><li class="resp-item"><span class="resp-time">03:42.8</span> <span class="resp-text">This pad is also below the 3-millimeter threshold.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -1456,6 +1607,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:29.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Okay, where did I put all the lug nuts?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The user asks for the location of the lug nuts. I have observed the user removing the lug nuts from all four tires of the vehicle. After removing the lug nuts from each tire, the user consistently placed them in a magnetic tray attached to the car lift arm. Since this action occurred before the user asked the question, I can confidently provide the location.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:30.0</span> <span class="resp-text">You placed all the lug nuts in the magnetic tray on the car lift.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -1549,6 +1709,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 01:53.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Remind me, which corner did I start loosening the nuts on first?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I can answer this question by reviewing the video from the beginning. The video shows you first approaching the front right wheel at 0:15 and starting to loosen the nuts on that wheel at 0:41. This was the first wheel you worked on in the video, so I can confidently answer your question based on these observations.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">01:53.8</span> <span class="resp-text">You started on the front right wheel.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -1642,6 +1811,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:38.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> How do these brake pads look to you, are they worn down enough to need replacing?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The user asks for an assessment of the brake pads' condition at 1:58. After removing the wheel, the user shines a flashlight on the brake caliper, providing a clear view of the outer brake pad's thickness. Based on this visual information, the pad appears to have very little friction material left, indicating it is near the end of its service life and should be replaced.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:39.5</span> <span class="resp-text">Yes, those brake pads look very worn. From what I can see, there are only a few millimeters of friction material left, which is close to the minimum safe thickness. I would recommend replacing them soon, and it's also a good idea to check the rotor for any damage or uneven wear while you're at it.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -1735,6 +1913,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:38.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Do these brake pads look like they need to be replaced?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I can answer this question because the wearer removes the wheel and then uses a flashlight to get a clear, illuminated view of the brake pads inside the caliper. This view allows me to assess the thickness of the friction material. Based on how thin the material appears, I can make a judgment on whether they need replacement.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:39.5</span> <span class="resp-text">Yes, the friction material on those brake pads appears to be very thin and worn down. They should be replaced.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -1830,6 +2017,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:26.5</td><td class='deps'>—</td><td class='qtext'>Let me know when the guy in the black jacket comes back over here.</td></tr><tr><td class='qid'>q_002</td><td>00:41.0</td><td class='deps'>—</td><td class='qtext'>Also, keep a count of how many wheels I take off.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues two concurrent, unrelated instructions. The first is to notify them when a specific person returns, and the second is to count how many wheels are removed from the vehicle. The assistant tracks both tasks simultaneously; the trigger for the first instruction never occurs, so no response is given for it, while the trigger for the second instruction occurs twice, prompting a spoken count each time.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 0</span></div><div class="resp-empty">(no responses — trigger never fired in this video)</div></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 2</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:38.5</span> <span class="resp-text">That's one wheel.</span></li><li class="resp-item"><span class="resp-time">03:35.5</span> <span class="resp-text">That's two wheels.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -1924,6 +2118,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:47.5</td><td class='deps'>—</td><td class='qtext'>Hey, start a list for me and add each wheel as I remove it.</td></tr><tr><td class='qid'>q_002</td><td>02:01.0</td><td class='deps'>q_001</td><td class='qtext'>Okay, that's all four. You can stop tracking the wheels now.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user first asks the assistant to track each wheel as it is removed from the vehicle. The assistant correctly identifies and confirms the removal of the first wheel. Shortly after, the user issues a second command to stop tracking, which the assistant confirms, and therefore does not announce the removal of the subsequent wheels.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:39.0</span> <span class="resp-text">Got it, first wheel removed.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:01.5</span> <span class="resp-text">Okay, I'll stop tracking the wheels.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -2018,6 +2219,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:40.5</td><td class='deps'>—</td><td class='qtext'>Hey, let me know once I've got all four wheels off the car.</td></tr><tr><td class='qid'>q_002</td><td>00:58.0</td><td class='deps'>q_001</td><td class='qtext'>And after that's done, remind me to check the brake pad wear on all four calipers.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user provides a sequence of two causally-linked instructions. The first instruction is to be notified when all four wheels are off the vehicle, and the second is a reminder to check the brake pads, which activates only after the first instruction's trigger has fired. The assistant monitors the removal of the wheels, but the video concludes after only two of the four wheels have been taken off. Since the precondition for the first instruction is never met, its response is not triggered, and consequently, the second instruction in the chain never becomes active.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 0</span></div><div class="resp-empty">(no responses — trigger never fired in this video)</div></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 0</span></div><div class="resp-empty">(no responses — trigger never fired in this video)</div></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -2130,6 +2338,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:01.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know every time I adjust the padding in here.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 6)</span>
+        </div>
+        <div class="answer-rationale">I can fulfill this request. I have monitored the video for every instance where you manipulate the yellow foam padding inside the helmet-like object and will provide a short notification for each occurrence.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:03.0</span> <span class="resp-text">You're adjusting the padding.</span></li><li class="resp-item"><span class="resp-time">00:32.5</span> <span class="resp-text">You're adjusting the padding again.</span></li><li class="resp-item"><span class="resp-time">00:41.5</span> <span class="resp-text">Adjusting the padding.</span></li><li class="resp-item"><span class="resp-time">01:25.5</span> <span class="resp-text">You're adjusting the padding.</span></li><li class="resp-item"><span class="resp-time">01:33.0</span> <span class="resp-text">There's another adjustment.</span></li><li class="resp-item"><span class="resp-time">02:42.0</span> <span class="resp-text">Adjusting the padding.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -2223,6 +2440,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:02.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> I want to track my progress, so let me know when I start working on a new piece of padding and when I finish placing it.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 6)</span>
+        </div>
+        <div class="answer-rationale">I will monitor your activity and provide a spoken notification each time you begin working on a new piece of padding and again when you finish placing it inside the mask. I have identified three distinct instances of this activity in the video. My responses are timed to coincide with the moments you pick up a new piece and when you have finished positioning it.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:03.5</span> <span class="resp-text">Starting a new piece of padding.</span></li><li class="resp-item"><span class="resp-time">00:08.0</span> <span class="resp-text">And that piece is placed.</span></li><li class="resp-item"><span class="resp-time">00:41.0</span> <span class="resp-text">Starting the next piece.</span></li><li class="resp-item"><span class="resp-time">01:25.5</span> <span class="resp-text">Finished placing that one.</span></li><li class="resp-item"><span class="resp-time">01:48.0</span> <span class="resp-text">Starting another piece now.</span></li><li class="resp-item"><span class="resp-time">02:48.0</span> <span class="resp-text">And that's placed.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -2316,6 +2542,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:43.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know when this adhesive has set enough for me to work on the next section.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The user asks to be notified when the adhesive applied at 0:43 has set. There are no direct visual indicators in the video to confirm when the adhesive is fully set. However, the user sets the project aside and returns to it at 2:41, checking the glued area and immediately continuing their work. This indicates that approximately two minutes was a sufficient setting time. The assistant's response is timed at 2:40, proactively alerting the user just before they would have checked on their own.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">04:00.0</span> <span class="resp-text">The adhesive should be set enough for you to work on the next section now.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -2409,6 +2644,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:49.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Where did I leave that scalpel?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I tracked the scalpel from the beginning of the video. The wearer picks it up and sets it down a few times, but its last location before the question is on the piece of cardboard, to the right of the mask being worked on. Since it is clearly visible there when the question is asked, I can answer.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:50.0</span> <span class="resp-text">It's on the cardboard to your right, next to the scissors.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -2502,6 +2746,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 01:12.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Wait, did I already apply the glue to this foam piece?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I carefully reviewed the video leading up to the moment the question was asked. While you did pick up the glue tube and the foam piece around the 56-second mark, you did not actually apply any glue to it before putting it down. Therefore, I can confirm that the action has not yet been performed.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">01:13.0</span> <span class="resp-text">No, it doesn't look like you've applied glue to that piece yet.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -2595,6 +2848,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 01:26.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> What's the best technique for shaping this foam padding to fit snugly inside the helmet?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I can answer this question by observing the materials and tools available on the workbench. The user has foam padding, a helmet, and various cutting tools like scissors and a scalpel. Based on this, I can provide a standard crafting technique for shaping and fitting foam into a curved object.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">01:27.5</span> <span class="resp-text">A good method is to press the foam into the helmet to get an impression of the shape you need. You can then mark the outline and use the scalpel for a clean, precise cut. I'd recommend cutting the piece slightly larger at first, then test fitting it and trimming it down until it fits snugly.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -2688,6 +2950,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:05.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Does it look like this padding is securely in place?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I am answering the question based on my observation of the user's actions right before and at the time of the question. The user presses a piece of foam padding into place inside a mask. After pressing it firmly for several seconds, they remove their hand, and the padding remains in place without shifting, indicating it is secure.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:07.0</span> <span class="resp-text">Yes, it looks secure. It didn't move when you took your hand away.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -2783,6 +3054,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:12.5</td><td class='deps'>—</td><td class='qtext'>Keep a count of every time I use a cutting tool, like the scissors or the scalpel.</td></tr><tr><td class='qid'>q_002</td><td>00:55.0</td><td class='deps'>—</td><td class='qtext'>Also, can you start a separate count for how many times I apply glue?</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user first asks the assistant to count the usage of cutting tools. Later, while the first instruction is still active, the user adds a second, concurrent instruction to count glue applications. The assistant tracks both unrelated events in parallel, providing a running count for each action as it occurs.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 2</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">03:47.5</span> <span class="resp-text">Okay, that's one use of a cutting tool.</span></li><li class="resp-item"><span class="resp-time">03:53.0</span> <span class="resp-text">And that's two.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 2</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">01:13.0</span> <span class="resp-text">Okay, that's one glue application.</span></li><li class="resp-item"><span class="resp-time">02:43.0</span> <span class="resp-text">That's two applications.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -2877,6 +3155,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:10.5</td><td class='deps'>—</td><td class='qtext'>Keep an eye on my tools for me; let me know where I put them down so I don't lose them in this mess.</td></tr><tr><td class='qid'>q_002</td><td>00:43.0</td><td class='deps'>q_001</td><td class='qtext'>Actually, you only need to track the sharp tools, like the scalpel and the scissors.</td></tr><tr><td class='qid'>q_003</td><td>02:36.0</td><td class='deps'>q_001</td><td class='qtext'>Okay, I'm done with the cutting for now, you can stop tracking.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user first issues a broad instruction to track all tools, which is then narrowed to only include sharp tools. The assistant acknowledges this change and updates its monitoring scope accordingly. Finally, the user cancels the instruction entirely, and the assistant confirms that it has stopped tracking. The assistant's responses correspond to the placement of tools that fall within the currently active instruction's scope.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">00:42.7</span> <span class="resp-text">You set the red-handled tool on the cardboard.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 3</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">00:43.6</span> <span class="resp-text">Okay, I will only track your sharp tools from now on.</span></li><li class="resp-item"><span class="resp-time">00:59.4</span> <span class="resp-text">You've placed the craft knife on the cardboard.</span></li><li class="resp-item"><span class="resp-time">02:34.5</span> <span class="resp-text">The scalpel is now on the cardboard.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_003</span> <span class="m-answer-label">q_003 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:36.6</span> <span class="resp-text">Understood, I've stopped tracking.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -2971,6 +3256,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>01:15.5</td><td class='deps'>—</td><td class='qtext'>Start a two-minute timer for this glue to set.</td></tr><tr><td class='qid'>q_002</td><td>01:20.0</td><td class='deps'>q_001</td><td class='qtext'>Once that timer is up, remind me to check the fit with the burlap cover.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues a command to start a two-minute timer. The assistant acknowledges this request and starts the timer. The user then adds a follow-up instruction to be reminded of another task once the timer completes. Because the two-minute timer does not finish before the end of the video, the condition for the second instruction is never met, and therefore the assistant does not issue the reminder.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">01:16.2</span> <span class="resp-text">Starting a two-minute timer now.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 0</span></div><div class="resp-empty">(no responses — trigger never fired in this video)</div></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -3083,6 +3375,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:25.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know each time I've finished prepping a fig.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 3)</span>
+        </div>
+        <div class="answer-rationale">I have identified each moment in the video where you finish preparing a fig after your request at 25.5 seconds. The preparation consists of twisting off the stem. I will provide a short, spoken notification immediately after each of the three instances I observed.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:29.5</span> <span class="resp-text">First fig prepped.</span></li><li class="resp-item"><span class="resp-time">01:16.5</span> <span class="resp-text">Second fig prepped.</span></li><li class="resp-item"><span class="resp-time">01:21.5</span> <span class="resp-text">Third fig prepped.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -3176,6 +3477,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:02.3</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Tell me when I start blending and again when I stop so I can time it.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 2)</span>
+        </div>
+        <div class="answer-rationale">I can identify the start and end of the blending process by listening for the sound of the blender turning on and off. My first response marks the moment the blending begins, and my second response marks when it completely stops, allowing you to time the activity.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:38.2</span> <span class="resp-text">Blending started.</span></li><li class="resp-item"><span class="resp-time">02:56.5</span> <span class="resp-text">And stop.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -3269,6 +3579,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 01:44.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Keep an eye on the rest of these figs for me, and let me know if they start to look like they're spoiling.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 0)</span>
+        </div>
+        <div class="answer-rationale">I can monitor the figs as requested. After your instruction, I watched the remaining figs on the tray for the rest of the video. The figs did not show any visible signs of spoiling, so the condition to trigger an alert was never met, and therefore no response is given.</div>
+        <div class="resp-empty">(no responses — trigger never fired in this video)</div>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -3431,6 +3750,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 03:44.0</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Hold on, did I remember to add the chia seeds?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I can answer this question by reviewing the video footage. At 1:41, you are shown scooping soaked chia seeds from a red bowl into the personal blender cup. This happened after you added the figs and lemon juice, and before you added the cinnamon stevia.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">03:45.0</span> <span class="resp-text">Yes, you added the soaked chia seeds right after the lemon juice.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -3524,6 +3852,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 03:04.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Since this jam is raw, how long will it keep for in the fridge?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The video does not explicitly state how long the raw fig jam will last in the refrigerator. However, based on the ingredients used (fresh fruit, no sugar, uncooked) and general food safety knowledge, I can provide a reasonable estimate for its shelf life. I will explain that because it is raw and lacks traditional preservatives, its lifespan is limited but can be extended by freezing.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">03:05.5</span> <span class="resp-text">Since this is a raw jam with no added sugar and it isn't cooked, it should last about one week in an airtight container in the refrigerator. The lemon juice will help preserve it for that time. For longer storage, you can freeze it.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -3617,6 +3954,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 03:04.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Does this look thick enough to be considered jam?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I've observed the video and can answer the user's question. Around the ask time, the woman has finished blending the fig jam and is showing its consistency by stirring it with a spoon. The mixture is visibly thick and holds its shape, which allows me to confirm that it looks like jam.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">03:06.0</span> <span class="resp-text">Yes, it looks thick enough. It's holding its shape nicely on the spoon and isn't runny at all.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -3712,6 +4058,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:26.5</td><td class='deps'>—</td><td class='qtext'>Keep a list of the health benefits of figs that I mention.</td></tr><tr><td class='qid'>q_002</td><td>01:55.5</td><td class='deps'>—</td><td class='qtext'>And also, count the number of separate ingredients I'm adding to the blender.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues two concurrent standing instructions at different times. The first asks for a list of the health benefits of figs as they are mentioned, and the assistant responds each time the speaker states a new benefit. The second instruction asks for a count of ingredients being added to the blender; the assistant begins tracking this from the moment the instruction is given, only counting items added after that point in time.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 4</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">00:29.0</span> <span class="resp-text">Okay, first benefit: they're good for blood pressure.</span></li><li class="resp-item"><span class="resp-time">00:32.5</span> <span class="resp-text">Got it, second: good for digestion.</span></li><li class="resp-item"><span class="resp-time">00:35.0</span> <span class="resp-text">Third, they're highly alkaline.</span></li><li class="resp-item"><span class="resp-time">00:47.5</span> <span class="resp-text">And fourth, they restore pH balance.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:19.0</span> <span class="resp-text">Okay, that's one ingredient.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -3806,6 +4159,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>01:58.5</td><td class='deps'>—</td><td class='qtext'>Okay, let's start a recipe list. Log each ingredient as I add it to the blender.</td></tr><tr><td class='qid'>q_002</td><td>02:19.0</td><td class='deps'>q_001</td><td class='qtext'>Actually, you know what, just list 'cinnamon stevia' as the sweetener. Ignore the other ones I was talking about.</td></tr><tr><td class='qid'>q_003</td><td>03:05.0</td><td class='deps'>q_001</td><td class='qtext'>Alright, that's everything. You can stop logging the recipe now.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user first issues a standing instruction to log all ingredients added to the blender for a recipe. The assistant begins tracking, announcing each ingredient as it's added. The user then modifies the instruction, specifying to only log 'cinnamon stevia' as the sweetener and ignore others mentioned, which the assistant acknowledges. Finally, after all ingredients are in, the user cancels the standing instruction, and the assistant confirms the logging process is complete.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 4</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:02.1</span> <span class="resp-text">Three figs, got it.</span></li><li class="resp-item"><span class="resp-time">02:08.5</span> <span class="resp-text">Juice of half a lemon.</span></li><li class="resp-item"><span class="resp-time">02:23.0</span> <span class="resp-text">Soaked chia seeds.</span></li><li class="resp-item"><span class="resp-time">03:38.8</span> <span class="resp-text">Cinnamon stevia.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:19.6</span> <span class="resp-text">Okay, I'll log cinnamon stevia as the sweetener.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_003</span> <span class="m-answer-label">q_003 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">03:05.5</span> <span class="resp-text">Okay, recipe logging is complete.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -3900,6 +4260,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>01:37.5</td><td class='deps'>—</td><td class='qtext'>Start a ten-minute timer for these chia seeds to soak.</td></tr><tr><td class='qid'>q_002</td><td>02:14.0</td><td class='deps'>q_001</td><td class='qtext'>Once that timer goes off, remind me to add the cinnamon stevia before I blend.</td></tr><tr><td class='qid'>q_003</td><td>02:37.0</td><td class='deps'>q_002</td><td class='qtext'>And after I've added the stevia, remind me to just pulse the blender so the jam stays chunky.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues a three-part causal chain of instructions related to making fig jam. The first instruction is to start a ten-minute timer for the chia seeds to soak, which the assistant confirms. The second instruction is contingent on that timer finishing, which does not happen within the video's duration. Because the trigger for the second instruction never occurs, the second and third dependent instructions never become active, so the assistant provides no further reminders.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">01:37.5</span> <span class="resp-text">Okay, starting a ten-minute timer now for the chia seeds.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 0</span></div><div class="resp-empty">(no responses — trigger never fired in this video)</div></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_003</span> <span class="m-answer-label">q_003 — responses: 0</span></div><div class="resp-empty">(no responses — trigger never fired in this video)</div></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -4012,6 +4379,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:33.0</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Notify me each time I place a finished cake ball on the tray.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I will notify you when you place a finished cake ball on the tray. After your request, I observed you dip a cake pop in chocolate, cover it with sprinkles, and then place it back on the baking tray. This is the only time this event occurs after your instruction.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">03:22.5</span> <span class="resp-text">Placed.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -4105,6 +4481,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 05:04.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Tell me when I start dipping each cake pop and when I place it back on the tray to set.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 2)</span>
+        </div>
+        <div class="answer-rationale">I will monitor the video from the moment of your request. I will notify you when you start dipping the cake pop into the melted chocolate and again when you place the finished pop back onto the tray. As you only complete this action for one cake pop in the video after your request, I will provide a start and end notification for that single instance.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">05:05.5</span> <span class="resp-text">Start.</span></li><li class="resp-item"><span class="resp-time">05:22.2</span> <span class="resp-text">End.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -4198,6 +4583,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:11.0</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know when these are firm enough to come out of the fridge and be dipped.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I monitored the video for the moment the cake pops were taken out of the fridge, indicating they had firmed up and were ready for dipping. At 2:13, the creator holds up the tray of chilled cake pops, stating they are now cold from the refrigerator. This is the moment to alert you that the threshold has been met.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">03:33.0</span> <span class="resp-text">They look firm enough to be dipped now.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -4291,6 +4685,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:09.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Okay, where did I put the cream cheese?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The user asks for the location of the cream cheese at 129.5 seconds. I located the cream cheese by reviewing the video footage leading up to this point. At the time of the question, the cream cheese is visible inside a small blue bowl resting on the table to the left of the main mixing bowl.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:10.0</span> <span class="resp-text">It's in the small blue bowl on the table, next to the scale.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -4384,6 +4787,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:37.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> What was the weight I was aiming for with each of these again?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I can answer this question because at 1:54 in the video, on-screen text explicitly states the weight for each cake pop ball. The text reads, "Pesamos bolitas de 20gr y le damos forma," which translates to "We weigh balls of 20g and shape them." I will provide this information in my response.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:38.0</span> <span class="resp-text">You were aiming for 20 grams for each ball.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -4546,6 +4958,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:31.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Does this look compact enough, or should I keep mixing it?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">The user asks for a quality check on the cake pop mixture at 151.5 seconds. At this point, the mixture is almost fully combined. I wait until the chef successfully forms it into a single, cohesive ball that lifts cleanly from the bowl to confirm that it is, in fact, compact enough and then deliver my response.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:32.0</span> <span class="resp-text">Yes, it looks compact enough. You've been able to form it into a single ball that holds its shape.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -4641,6 +5062,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>02:37.0</td><td class='deps'>—</td><td class='qtext'>Keep a running count of how many cake pops I place on this tray.</td></tr><tr><td class='qid'>q_002</td><td>03:05.0</td><td class='deps'>—</td><td class='qtext'>Also, monitor the temperature of this melted chocolate for me. Let me know if it gets too cool to work with.</td></tr><tr><td class='qid'>q_003</td><td>03:13.0</td><td class='deps'>—</td><td class='qtext'>And one last thing, can you count how many distinct colors you see in these sprinkles I'm using?</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues three concurrent instructions while making cake pops. The assistant successfully tracks the number of finished cake pops placed on the tray and counts the distinct colors in the sprinkles, responding when each trigger occurs. It determines that it cannot monitor the chocolate's temperature, as there are no visual indicators like a thermometer or changes in consistency, and therefore correctly marks that question as unanswerable.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">05:22.5</span> <span class="resp-text">Va una.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002</span></div><div class="cant-answer"><b>can’t answer:</b> I cannot visually determine the temperature of the chocolate; there are no relevant cues in the video.</div></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_003</span> <span class="m-answer-label">q_003 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">05:14.0</span> <span class="resp-text">Veo al menos seis colores: rojo, naranja, amarillo, verde, azul y rosa.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -4735,6 +5163,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>03:06.5</td><td class='deps'>—</td><td class='qtext'>Start counting how many cake pops I dip and decorate.</td></tr><tr><td class='qid'>q_002</td><td>03:19.0</td><td class='deps'>q_001</td><td class='qtext'>Hold on, pause the count. I want to make sure I have enough sprinkles for all of them.</td></tr><tr><td class='qid'>q_003</td><td>03:22.0</td><td class='deps'>q_001</td><td class='qtext'>Okay, it should be enough. You can resume counting.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user first instructs the assistant to count how many cake pops are dipped and decorated. The assistant begins counting, but then the user asks for the count to be paused, which the assistant confirms. After a few seconds, the user asks to resume counting, and the assistant again confirms and provides the current total, though no more cake pops are decorated after this point in the video.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 4</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">03:08.9</span> <span class="resp-text">One.</span></li><li class="resp-item"><span class="resp-time">03:11.4</span> <span class="resp-text">Two.</span></li><li class="resp-item"><span class="resp-time">03:14.9</span> <span class="resp-text">Three.</span></li><li class="resp-item"><span class="resp-time">03:18.9</span> <span class="resp-text">Four.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">03:19.5</span> <span class="resp-text">Okay, pausing the count.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_003</span> <span class="m-answer-label">q_003 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">03:22.5</span> <span class="resp-text">Resuming count. We're at four.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -4829,6 +5264,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>02:11.5</td><td class='deps'>—</td><td class='qtext'>Okay, these are going in the fridge now. Please set a timer for three hours.</td></tr><tr><td class='qid'>q_002</td><td>02:20.2</td><td class='deps'>q_001</td><td class='qtext'>When that timer is up, remind me the next step is to melt the chocolate for the coating.</td></tr><tr><td class='qid'>q_003</td><td>02:26.8</td><td class='deps'>q_002</td><td class='qtext'>And with that reminder, also tell me the tip about adding a little sunflower oil to make the chocolate more fluid.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues a chain of three instructions. The first is to set a three-hour timer. The second and third instructions are reminders that should be delivered when that timer expires. The video confirms at timestamp 2:12 that the cake pops have been chilled for three hours, which acts as the trigger for the timer's completion. The assistant correctly waits for this trigger event before delivering the two chained reminders.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 0</span></div><div class="resp-empty">(no responses — trigger never fired in this video)</div></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">03:33.0</span> <span class="resp-text">Your three-hour timer is up. The next step is to melt the chocolate for the coating.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_003</span> <span class="m-answer-label">q_003 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">03:37.0</span> <span class="resp-text">I'll also remind you of the tip to add a little sunflower oil to make the chocolate more fluid.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -4941,6 +5383,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 01:43.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know every time I add a new ingredient to the cup.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 3)</span>
+        </div>
+        <div class="answer-rationale">The user has made a standing request to be notified each time an ingredient is added to the cup. I have identified three such instances that occur after the user's request: the addition of Chamoy sauce, Tajin, and a tamarind candy stick. I will provide a short notification for each of these events as they happen.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:24.5</span> <span class="resp-text">Chamoy sauce added.</span></li><li class="resp-item"><span class="resp-time">02:31.0</span> <span class="resp-text">Tajin added.</span></li><li class="resp-item"><span class="resp-time">03:24.0</span> <span class="resp-text">Tamarind candy stick added.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -5103,6 +5554,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 00:28.0</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Let me know when the water reaches the max fill line.</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I can see the 'MAX LIQUID' line on the side of the blender cup. I will watch the water as it is poured in and alert you the moment the water level reaches that line.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">00:31.2</span> <span class="resp-text">The water is at the max fill line.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -5196,6 +5656,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 03:22.0</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Okay, where did I put that tamarind candy stick?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I observed you placing the tamarind candy stick into the finished mangonada drink at 02:03. At the time of your question, the drink is still on the counter in front of you with the candy stick inside it. Therefore, I can confidently tell you its location.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">03:22.5</span> <span class="resp-text">You put it in the cup of mangonada.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -5289,6 +5758,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 02:29.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Did I remember to add the Tajin before pouring the mango in?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I can answer this question by recalling the sequence of events shown in the video. The video shows you adding Chamoy sauce to the cup at 1:08, followed by sprinkling Tajin into the cup at 1:26. You then poured the blended mango mixture into the cup at 1:34.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">02:30.5</span> <span class="resp-text">Yes, you added the Tajin to the cup right before pouring in the mango.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -5451,6 +5929,15 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         <span class="ask-time">asked @ 01:41.5</span>
       </div>
       <div class="question"><span class="qlabel">Q:</span> Is this blended enough, or should I give it another pulse?</div>
+      
+      <div class="answer-block">
+        <div class="answer-head">
+          <span class="label">Gemini answer (responses: 1)</span>
+        </div>
+        <div class="answer-rationale">I am answering the question based on the video at the time the wearer asked it. At 101.5 seconds, the blender has stopped and the mixture inside is visible. I can see that the contents are very smooth and have a consistent texture, with no obvious chunks of mango or ice remaining.</div>
+        <ol class="resp-list"><li class="resp-item"><span class="resp-time">01:42.5</span> <span class="resp-text">Yes, that looks ready. The texture is smooth and consistent, with no visible chunks of ice or mango.</span></li></ol>
+      </div>
+    
     </li>
     </ol>
         </div>
@@ -5546,6 +6033,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:23.5</td><td class='deps'>—</td><td class='qtext'>Hey, start a list for me of all the ingredients I add that have sugar or artificial sweeteners.</td></tr><tr><td class='qid'>q_002</td><td>00:28.5</td><td class='deps'>—</td><td class='qtext'>And on another note, let me know each time I pour a liquid.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues two separate, unrelated instructions that are active at the same time. The first asks the assistant to create a list of ingredients containing sugar or artificial sweeteners. The second asks for a notification each time a liquid is poured. The assistant tracks both instructions concurrently, providing updates for each one as the relevant events occur in the video.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 3</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">00:39.2</span> <span class="resp-text">Okay, I've added the Mio liquid water enhancer to your list.</span></li><li class="resp-item"><span class="resp-time">01:53.5</span> <span class="resp-text">Adding chamoy sauce to the list.</span></li><li class="resp-item"><span class="resp-time">03:24.5</span> <span class="resp-text">Got it, tamarind candy stick is on the list.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 4</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">00:29.8</span> <span class="resp-text">You're pouring a liquid.</span></li><li class="resp-item"><span class="resp-time">00:39.8</span> <span class="resp-text">Pouring another liquid now.</span></li><li class="resp-item"><span class="resp-time">01:53.8</span> <span class="resp-text">You're pouring a liquid.</span></li><li class="resp-item"><span class="resp-time">02:22.5</span> <span class="resp-text">And another liquid is being poured.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -5640,6 +6134,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:24.5</td><td class='deps'>—</td><td class='qtext'>Hey, keep track and let me know every time I add an ingredient.</td></tr><tr><td class='qid'>q_002</td><td>01:45.0</td><td class='deps'>q_001</td><td class='qtext'>Actually, change that. From now on, just alert me for the sauces and seasonings.</td></tr><tr><td class='qid'>q_003</td><td>02:31.0</td><td class='deps'>q_001</td><td class='qtext'>Okay, that's the last one. You can stop the alerts now.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user first asks the assistant to track every added ingredient. The assistant confirms each ingredient addition, from water to the various layers of sauce and seasoning. The user then modifies the instruction to only track sauces and seasonings, which the assistant acknowledges before announcing the final addition of Tajin. Finally, the user cancels the instruction, and the assistant confirms that the alerts have been stopped.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 6</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">00:29.0</span> <span class="resp-text">You've added water.</span></li><li class="resp-item"><span class="resp-time">00:40.0</span> <span class="resp-text">Mio enhancer added.</span></li><li class="resp-item"><span class="resp-time">01:13.0</span> <span class="resp-text">Chamoy sauce added.</span></li><li class="resp-item"><span class="resp-time">01:29.0</span> <span class="resp-text">Tajin added.</span></li><li class="resp-item"><span class="resp-time">01:34.0</span> <span class="resp-text">There's the blended mango.</span></li><li class="resp-item"><span class="resp-time">01:42.0</span> <span class="resp-text">More chamoy sauce on top.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 2</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">01:45.0</span> <span class="resp-text">Okay, tracking only sauces and seasonings now.</span></li><li class="resp-item"><span class="resp-time">01:50.5</span> <span class="resp-text">Tajin on top.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_003</span> <span class="m-answer-label">q_003 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">02:31.0</span> <span class="resp-text">Okay, alerts are off.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
@@ -5734,6 +6235,13 @@ Return JSON conforming to the schema: a "rationale" (2-4 sentences on what the v
         </thead>
         <tbody><tr><td class='qid'>q_001</td><td>00:57.0</td><td class='deps'>—</td><td class='qtext'>Set a timer for 30 seconds while I blend this.</td></tr><tr><td class='qid'>q_002</td><td>00:59.5</td><td class='deps'>q_001</td><td class='qtext'>When the timer goes off, remind me to get the cup ready with the Chamoy sauce.</td></tr><tr><td class='qid'>q_003</td><td>01:02.0</td><td class='deps'>q_002</td><td class='qtext'>Okay, and once the cup is prepped, prompt me to pour the mango smoothie in.</td></tr></tbody>
       </table>
+      
+        <div class="answer-block m-answer-block">
+          <div class="answer-head"><span class="label">Gemini answer</span></div>
+          <div class="answer-rationale">The user issues a chain of three instructions. The first is to set a 30-second timer starting when they begin blending. The second instruction is a reminder that triggers when the timer from the first instruction finishes. The third instruction is a prompt that triggers once the action from the second reminder (prepping the cup) is complete. The assistant tracks these dependencies, firing the timer notification and the first reminder at the 30-second mark, and then waiting until the cup is fully prepped with sauce and seasoning before issuing the final prompt.</div>
+          <div class="m-answer"><div class="m-answer-head"><span class="qid">q_001</span> <span class="m-answer-label">q_001 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">01:27.0</span> <span class="resp-text">Your 30-second timer is up.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_002</span> <span class="m-answer-label">q_002 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">01:27.1</span> <span class="resp-text">Time to get the cup ready with the Chamoy sauce.</span></li></ol></div><div class="m-answer"><div class="m-answer-head"><span class="qid">q_003</span> <span class="m-answer-label">q_003 — responses: 1</span></div><ol class="resp-list"><li class="resp-item"><span class="resp-time">01:31.5</span> <span class="resp-text">The cup is prepped, so go ahead and pour the mango smoothie in.</span></li></ol></div>
+        </div>
+        
     </li>
     </ol>
         </div>
